@@ -38,13 +38,16 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
   })
 
   Results.UserView = Marionette.ItemView.extend({
-    template: '[data-template-name=user]'
+    template: '[data-template-name=user]',
+    tagName: 'li',
+    className: 'user'
   })
 
   Results.UsersView = Marionette.CollectionView.extend({
     itemView: Results.UserView,
 
-    className: 'results'
+    tagName: 'ul',
+    className: 'users'
   })
 
   Results.MainView = Backbone.View.extend({

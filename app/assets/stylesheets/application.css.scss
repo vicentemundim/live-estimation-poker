@@ -11,3 +11,50 @@
  *= require app_bootstrap
  *= require_self
  */
+
+@import "compass/css3";
+
+.actions {
+  margin-top: 20px;
+}
+
+.card {
+  text-align: center;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  line-height: 60px;
+  font-size: 32px;
+  border: 1px solid #dedede;
+  background: #fafafa;
+  @include border-radius(4px);
+  @include box-shadow(0 0 16px -4px rgba(0, 0, 0, 0.2));
+  @include transition(box-shadow 0.2s ease-out);
+
+  &:hover {
+    text-decoration: none;
+    @include box-shadow(0 0 16px 0px rgba(0, 0, 0, 0.3));
+  }
+}
+
+.users-container {
+  ul {
+    list-style: none;
+    margin: 0;
+    min-height: 200px;
+
+    li {
+      display: inline-block;
+      margin: 0 5px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      img {
+        @include border-radius(6px);
+      }
+    }
+  }
+}

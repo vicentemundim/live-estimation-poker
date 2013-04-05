@@ -20,5 +20,5 @@
 //= require backbone/live_estimation_poker
 
 Backbone.Marionette.Renderer.render = function(template, data) {
-  return $.mustache(template, data);
+  return $(template).mustache(data);
 }

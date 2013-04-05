@@ -2,10 +2,26 @@
 
 <%= hidden_field_tag :pusher_api_key, ENV['PUSHER_APP_KEY'] %>
 
-<div class="results-container">
+<div class="row-fluid">
+  <div class="span3">
+    <h3>Connected Users:</h3>
+    <div class="users-container">
+    </div>
+  </div>
+
+  <div class="span9">
+    <% ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?'].each do |value| %>
+    <a href="" class="card" data-value="<%= value %>">
+      <%= value %>
+    </a>
+    <% end %>
+  </div>
 </div>
 
+<div class="actions">
+  <%= link_to "Iniciar", '', class: "btn btn-success", data: { start: true }  %>
+</div>
 
 <script type="text/html" data-template-name="user">
-  <li>{{email}}</li>
+  <img src="{{gravatar}}" width="60" height="60" title="{{email}}">
 </script>
