@@ -1,0 +1,13 @@
+<h1>Live estimation poker</h1>
+
+<p>Welcome <strong><%= current_user.email %></strong></p>
+
+<%= button_to "Create a new room", rooms_path, class: 'btn btn-success' %>
+
+<h2>Available Rooms</h2>
+
+<ul>
+<% collection.each do |resource| %>
+  <li><%= link_to resource.token, resource %></li>
+<% end %>
+</ul>

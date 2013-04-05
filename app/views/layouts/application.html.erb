@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Estimation Poker</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div class="container-fluid">
+  <% if flash[:notice] %>
+    <div class="alert alert-success"><%= notice %></div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-error"><%= alert %></div>
+  <% end %>
+
+  <%= yield %>
+</div>
+
+<%= javascript_include_tag "http://js.pusher.com/1.12/pusher.min.js" %>
+<%= javascript_include_tag "application" %>
+</body>
+</html>
