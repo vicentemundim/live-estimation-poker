@@ -4,6 +4,10 @@
 //= require_tree ./views
 //= require_tree ./routers
 
+Backbone.Marionette.Renderer.render = function(template, data) {
+  return $(template).mustache(data);
+}
+
 var LiveEstimationPoker = new Backbone.Marionette.Application()
 
 $('.game-page').each(function () {

@@ -3,28 +3,50 @@
 <h1>Room <em><%= resource.token %></em></h1>
 
 <%= hidden_field_tag :pusher_api_key, ENV['PUSHER_APP_KEY'] %>
-<%= hidden_field_tag :room, resource.token %>
 
-<div class="row-fluid">
-  <div class="span3">
-    <h3>Connected Users:</h3>
-    <div class="users-container">
-    </div>
+<div class="sidebar">
+  <h3>Connected Users:</h3>
+
+  <div class="users-container">
   </div>
 
-  <div class="span9">
-    <% ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?'].each do |value| %>
-    <a href="" class="card" data-value="<%= value %>">
-      <%= value %>
-    </a>
-    <% end %>
+  <div class="actions-container">
+
   </div>
 </div>
 
-<div class="actions">
-  <%= link_to "Iniciar", '', class: "btn btn-success", data: { start: true }  %>
+<div class="game-area" data-room-attributes="<%= resource.to_json %>" data-messages="">
+  <div class="messages"></div>
+
+  <h3>Select a card:</h3>
+  <div class="cards-container">
+  </div>
+
+  <div class="game-results">
+    <h3>Results:</h3>
+
+    <div class="player-cards-container">
+    </div>
+  </div>
 </div>
 
 <script type="text/html" data-template-name="user">
-  <img src="{{gravatar}}" width="60" height="60" title="{{email}}">
+  <img src="{{gravatar}}" width="60" height="60" title="{{name}}" data-toggle="tooltip" class="img-circle">
+</script>
+
+<script type="text/html" data-template-name="card">
+  <a href="" class="card">{{value}}</a>
+</script>
+
+<script type="text/html" data-template-name="player-card">
+  <img src="{{gravatar}}" width="60" height="60" title="{{name}}" data-toggle="tooltip" class="img-circle">
+  <a href="" class="card">{{card}}</a>
+</script>
+
+<script type="text/html" data-template-name="empty-results">
+  <p>Waiting for players to select cards...</p>
+</script>
+
+<script type="text/html" data-template-name="actions">
+  <%= link_to "Start Game", '', class: "btn btn-success", data: { start: true }  %>
 </script>

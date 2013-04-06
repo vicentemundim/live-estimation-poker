@@ -29,11 +29,96 @@ body {
   @include border-radius(3px);
 }
 
-.actions {
-  margin-top: 20px;
+.sidebar {
+  position: absolute;
+  width: 280px;
+  padding: 10px;
+  border: 1px solid #cdcdcd;
+  background-color: #fafafa;
+  @include border-radius(4px);
+
+  @include box-shadow(0 0 8px rgba(0, 0, 0, 0.1));
+
+  h3 {
+    margin: 0 0 10px;
+    line-height: 30px;
+  }
+
+  .actions {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    margin-top: 20px;
+    @include box-sizing(border-box);
+    padding: 10px;
+    border-top: 1px solid #cdcdcd;
+  }
+}
+
+.game-area {
+  margin-left: 320px;
+}
+
+.cards-container, .player-cards-container {
+  ul {
+    list-style: none;
+    margin: 0;
+
+    li {
+      display: inline-block;
+
+      &.selected {
+        .card {
+          width: 80px;
+          height: 80px;
+          margin: 0 10px;
+          line-height: 80px;
+          @include box-shadow(0 0 16px 0px rgba(0, 0, 0, 0.3));
+          text-decoration: none;
+          outline: none;
+        }
+      }
+    }
+  }
+}
+
+.player-cards-container {
+  li {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #f7f7f7;
+    height: 80px;
+    margin: 10px;
+    @include border-radius(4px);
+    @include box-shadow(0 0 16px 0 rgba(0, 0, 0, 0.3));
+
+    &.empty {
+      border: 0;
+      @include box-shadow(none);
+    }
+
+    .card {
+      margin-left: 85px;
+
+      &:hover {
+        @include box-shadow(0 0 16px -4px rgba(0, 0, 0, 0.2));
+        cursor: default;
+        color: #0088cc;
+      }
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 17px;
+      margin-top: -29px;
+    }
+  }
 }
 
 .card {
+  text-decoration: none;
   text-align: center;
   display: inline-block;
   width: 60px;
@@ -45,7 +130,7 @@ body {
   background: #fafafa;
   @include border-radius(4px);
   @include box-shadow(0 0 16px -4px rgba(0, 0, 0, 0.2));
-  @include transition(box-shadow 0.2s ease-out);
+  @include transition(box-shadow 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out, line-height 0.2s ease-out, margin 0.2s ease-out);
 
   &:hover {
     text-decoration: none;
@@ -57,7 +142,7 @@ body {
   ul {
     list-style: none;
     margin: 0;
-    min-height: 200px;
+    min-height: 335px;
 
     li {
       display: inline-block;
@@ -68,7 +153,11 @@ body {
       }
 
       img {
-        @include border-radius(6px);
+        @include box_shadow(0 0 16px 2px rgba(0, 0, 0, 0.2));
+      }
+
+      &.user.me img {
+        @include box_shadow(0 0 16px 2px rgba(230, 237, 43, 0.7));
       }
     }
   }
