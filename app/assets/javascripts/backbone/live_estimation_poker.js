@@ -6,11 +6,11 @@
 
 var LiveEstimationPoker = new Backbone.Marionette.Application()
 
-LiveEstimationPoker.addInitializer(function (options) {
-  LiveEstimationPoker.pusher = new Pusher(options.pusherApiKey)
-})
+$('.game-page').each(function () {
+  LiveEstimationPoker.addInitializer(function (options) {
+    LiveEstimationPoker.pusher = new Pusher(options.pusherApiKey)
+  })
 
-$(function () {
   LiveEstimationPoker.start({pusherApiKey: $('input[name=pusher_api_key]').val()})
 })
 

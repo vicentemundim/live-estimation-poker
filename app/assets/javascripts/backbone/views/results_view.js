@@ -12,8 +12,9 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
       _(this).bindAll()
 
       this.players = new Results.Players
+      this.channelName = 'presence-' + this.get('room') + '-results'
 
-      this.resultsChannel = LiveEstimationPoker.pusher.subscribe('presence-results')
+      this.resultsChannel = LiveEstimationPoker.pusher.subscribe(this.channelName)
       this.resultsChannel.bind('pusher:subscription_succeeded', this.subscriptionSucceded)
       this.resultsChannel.bind('pusher:member_added', this.addPlayer)
       this.resultsChannel.bind('pusher:member_removed', this.removePlayer)
@@ -52,7 +53,7 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
 
   Results.MainView = Backbone.View.extend({
     initialize: function () {
-      this.model = new Results.Game
+      this.model = new Results.Game({ room: this.$('input[name=room]').val() })
 
       this.usersView = new Results.UsersView({ collection: this.model.players })
     },

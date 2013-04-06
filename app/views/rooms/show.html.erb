@@ -1,6 +1,9 @@
+<% content_for :body_class, 'game-page' %>
+
 <h1>Room <em><%= resource.token %></em></h1>
 
 <%= hidden_field_tag :pusher_api_key, ENV['PUSHER_APP_KEY'] %>
+<%= hidden_field_tag :room, resource.token %>
 
 <div class="row-fluid">
   <div class="span3">
