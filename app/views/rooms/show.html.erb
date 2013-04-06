@@ -48,5 +48,13 @@
 </script>
 
 <script type="text/html" data-template-name="actions">
+  <span>
+  {{#started}}
+  <%= link_to "End Game", '', class: "btn btn-danger", data: { stop: true }  %>
+  {{/started}}
+
+  {{^started}}
   <%= link_to "Start Game", '', class: "btn btn-success", data: { start: true }  %>
+  {{/started}}
+  </span>
 </script>

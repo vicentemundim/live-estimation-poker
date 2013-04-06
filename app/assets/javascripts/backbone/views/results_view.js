@@ -52,6 +52,7 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
       this.players = new Results.Players
       this.cards   = new Results.Cards
       this.selectedPlayerCards = new Results.PlayerCards
+      this.currentSelectedPlayerCards = new Results.PlayerCards
 
       _(this.get('room').get('cards')).map(function (rawCard) {
         this.cards.add(new Results.Card({ value: rawCard }))
@@ -65,7 +66,8 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
       this.resultsChannel.bind('pusher:subscription_succeeded', this.subscriptionSucceded)
       this.resultsChannel.bind('pusher:member_added', this.addPlayer)
       this.resultsChannel.bind('pusher:member_removed', this.removePlayer)
-      this.resultsChannel.bind('client-card-selected', this.otherPlayerSelectedCard)
+      this.resultsChannel.bind('client-game-started', this.gameStarted)
+      this.resultsChannel.bind('client-game-stopped', this.gameStopped)
     },
 
     subscriptionSucceded: function (members) {
@@ -89,22 +91,62 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
       return this._me
     },
 
-    start: function () {
+    start: function (options) {
+      options = options || {}
+
+      this.cards.each(function (card) {
+        card.set({selected: false})
+      })
+
+      this.currentSelectedPlayerCards.reset()
       this.selectedPlayerCards.reset()
-      this.set({status: 'started'})
+
+      this.resultsChannel.bind('client-card-selected', this.otherPlayerSelectedCard)
+      this.set({started: true})
+
+      if (!options.silence) {
+        this.resultsChannel.trigger('client-game-started', {})
+      }
+    },
+
+    stop: function (options) {
+      options = options || {}
+
+      this.selectedPlayerCards.add(this.currentSelectedPlayerCards.toJSON())
+
+      this.resultsChannel.unbind('client-card-selected', this.otherPlayerSelectedCard)
+      this.set({started: false})
+
+      if (!options.silence) {
+        this.resultsChannel.trigger('client-game-stopped', {})
+      }
+    },
+
+    gameStarted: function () {
+      this.start({ silence: true })
+    },
+
+    gameStopped: function () {
+      this.stop({ silence: true })
     },
 
     onCardSelected: function (card) {
-      this.me().set('card', card.get('value'))
-      this.selectedPlayerCards.add(this.me().toJSON(), {merge: true})
-      this.resultsChannel.trigger('client-card-selected', this.me().toJSON())
+      if (this.get('started')) {
+        this.me().set('card', card.get('value'))
+        this.currentSelectedPlayerCards.add(this.me().toJSON(), {merge: true})
+        this.resultsChannel.trigger('client-card-selected', this.me().toJSON())
+      }
     },
 
     otherPlayerSelectedCard: function (playerWithCard) {
       var player = this.players.get(playerWithCard.id)
 
       player.set(playerWithCard)
-      this.selectedPlayerCards.add(playerWithCard, {merge: true})
+      this.currentSelectedPlayerCards.add(playerWithCard, {merge: true})
+
+      if (this.currentSelectedPlayerCards.length == this.players.length) {
+        this.resultsChannel.trigger('client-game-stopped', {})
+      }
     }
   })
 
@@ -136,15 +178,21 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
     className: 'actions',
 
     events: {
-      'click [data-start]': 'start'
+      'click [data-start]': 'start',
+      'click [data-stop]': 'stop'
     },
 
     modelEvents: {
-      'change:status': 'render'
+      'change:started': 'render'
     },
 
     start: function () {
       this.model.start()
+      return false
+    },
+
+    stop: function () {
+      this.model.stop()
       return false
     }
   })
