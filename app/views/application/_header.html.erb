@@ -1,0 +1,38 @@
+<header class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <%= link_to "Live Estimation Poker", root_path, class: 'brand' %>
+    <ul class="nav">
+      <li class="divider-vertical"></li>
+      <% if user_signed_in? %>
+      <li>
+        <%= link_to "Rooms", root_path %>
+      </li>
+      <% end %>
+    </ul>
+
+    <div class="pull-right">
+      <% if user_signed_in? %>
+      <div class="btn-group">
+        <button class="btn">
+          <%= image_tag gravatar_url(size: 20) %>
+          <%= current_user.name %>
+        </button>
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+          </li>
+        </ul>
+      </div>
+      <% else %>
+      <ul class="nav">
+        <li>
+          <%= link_to "Sign Up", new_user_session_path %>
+        </li>
+      </ul>
+      <% end %>
+    </div>
+  </div>
+</header>

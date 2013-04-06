@@ -14,6 +14,21 @@
 
 @import "compass/css3";
 
+body {
+  padding-top: 60px;
+}
+
+.navbar-fixed-top .navbar-inner {
+  padding: 0 20px;
+}
+
+.btn-group img {
+  width: 20px;
+  height: 20px;
+  margin: -2px 4px 0 0;
+  @include border-radius(3px);
+}
+
 .actions {
   margin-top: 20px;
 }
