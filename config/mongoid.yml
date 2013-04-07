@@ -1,3 +1,7 @@
+session_default_options: &session_default_options
+  consistency: :strong
+  safe: true
+
 development:
   # Configure available database sessions. (required)
   sessions:
@@ -11,6 +15,7 @@ development:
       hosts:
         - localhost:27017
       options:
+        <<: *session_default_options
         # Change whether the session persists in safe mode by default.
         # (default: false)
         # safe: false
@@ -73,8 +78,15 @@ test:
       hosts:
         - localhost:27017
       options:
+        <<: *session_default_options
         consistency: :strong
         # In the test environment we lower the retries and retry interval to
         # low amounts for fast failures.
         max_retries: 1
         retry_interval: 0
+production:
+  sessions:
+    default:
+      uri: <%= ENV["MONGOLAB_URI"] || ENV["MONGOHQ_URL"] %>
+      options:
+        <<: *session_default_options
