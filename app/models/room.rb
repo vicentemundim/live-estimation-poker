@@ -13,12 +13,12 @@ class Room
 
   class << self
     def by_token(token)
-      find_by(token: token)
+      find_by(token: token.upcase)
     end
   end
 
   private
     def generate_token
-      self.token = SecureRandom.hex(2)
+      self.token = SecureRandom.hex(2).upcase
     end
 end

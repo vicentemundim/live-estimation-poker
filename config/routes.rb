@@ -3,7 +3,9 @@ LiveEstimationPoker::Application.routes.draw do
 
   get "home/index"
 
-  resources :rooms
+  resources :rooms do
+    get :join, on: :collection
+  end
 
   match '/pusher/auth' => 'pusher#auth'
 

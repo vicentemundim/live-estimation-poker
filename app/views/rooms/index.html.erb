@@ -1,13 +1,14 @@
-<h1>Live estimation poker</h1>
+<h1>Live estimation poker <small>Welcome <strong><%= current_user.name %></strong>!</small></h1>
 
-<p>Welcome <strong><%= current_user.name %></strong></p>
+<%= button_to "Create a new room", rooms_path, class: 'btn btn-large btn-success' %>
 
-<%= button_to "Create a new room", rooms_path, class: 'btn btn-success' %>
+<h2>Join an existing room <small>Enter the room code below to join your friends room.</small></h2>
 
-<h2>Available Rooms</h2>
+<%= simple_form_for Room.new, url: join_rooms_path, method: :get, html: { class: 'join-room' } do |f| %>
+  <div class="input-prepend">
+    <span class="add-on"><i class="icon-home"></i></span>
+    <%= f.input_field :token, class: 'input-small', maxlength: 4 %>
+  </div>
 
-<ul>
-<% collection.each do |resource| %>
-  <li><%= link_to resource.token, resource %></li>
+  <%= f.submit "Join", class: 'btn btn-large btn-success' %>
 <% end %>
-</ul>
