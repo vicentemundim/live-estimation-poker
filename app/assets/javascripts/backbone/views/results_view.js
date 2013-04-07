@@ -135,6 +135,11 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
         this.me().set('card', card.get('value'))
         this.currentSelectedPlayerCards.add(this.me().toJSON(), {merge: true})
         this.resultsChannel.trigger('client-card-selected', this.me().toJSON())
+
+        if (this.currentSelectedPlayerCards.length == this.players.length) {
+          this.gameStopped()
+          this.resultsChannel.trigger('client-game-stopped', {})
+        }
       }
     },
 
@@ -143,10 +148,6 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
 
       player.set(playerWithCard)
       this.currentSelectedPlayerCards.add(playerWithCard, {merge: true})
-
-      if (this.currentSelectedPlayerCards.length == this.players.length) {
-        this.resultsChannel.trigger('client-game-stopped', {})
-      }
     }
   })
 
