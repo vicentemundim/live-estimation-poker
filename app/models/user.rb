@@ -4,7 +4,8 @@ class User
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :github]
 
   field :name, type: String
 
@@ -40,5 +41,44 @@ class User
   ## Token authenticatable
   # field :authentication_token, type: String
 
+  field :provider, type: String
+  field :uid, type: String
+  field :avatar_url, type: String
+
+  before_save :update_avatar
+
   validates :name, presence: true
+
+  attr_accessible :provider, :uid, :name, :email, :password, :password_confirmation
+
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    User.or({ provider: auth.provider, uid: auth.uid }, { email: auth.info.email }).first_or_initialize.tap do |user|
+      user.name = auth.info.name
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20] if user.encrypted_password.blank?
+      user.avatar_url = auth.info.image
+      user.save
+    end
+  end
+
+  def self.find_for_google_oauth2(auth, signed_in_resource=nil)
+    find_for_facebook_oauth(auth, signed_in_resource)
+  end
+
+  def self.find_for_github(auth, signed_in_resource=nil)
+    find_for_facebook_oauth(auth, signed_in_resource)
+  end
+
+  protected
+    def update_avatar
+      self.avatar_url = gravatar_url if avatar_url.blank?
+    end
+
+    def gravatar_url(options={})
+      options.reverse_merge({size: 60, default: 'monsterid'})
+
+      "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}?s=#{options[:size]}&d=#{options[:default]}"
+    end
 end

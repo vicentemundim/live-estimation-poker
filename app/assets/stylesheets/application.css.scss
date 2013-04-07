@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require app_bootstrap
+ *= require zocial
  *= require_self
  */
 
@@ -188,6 +189,29 @@ h1, h2 {
       &.user.me img {
         @include box_shadow(0 0 16px 2px rgba(230, 237, 43, 0.7));
       }
+    }
+  }
+}
+
+.providers {
+  list-style: none;
+  margin: 20px 0 0;
+
+  li {
+    display: inline-block;
+    margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .providers {
+    li {
+      display: block;
+      margin: 20px 0 0;
     }
   }
 }

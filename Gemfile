@@ -33,6 +33,12 @@ gem 'devise'
 # Forms
 gem 'simple_form'
 
+# Facebook and Gmail integration
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-github'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

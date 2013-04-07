@@ -3,7 +3,15 @@
 <% end -%>
 
 <%- if devise_mapping.omniauthable? %>
+  <ul class="providers">
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider) %><br />
+    <li>
+      <% if provider == :google_oauth2 %>
+        <%= link_to "Sign in with Google", omniauth_authorize_path(resource_name, provider), class: "zocial google" %>
+      <% else %>
+        <%= link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path(resource_name, provider), class: "zocial #{provider.to_s}" %>
+      <% end %>
+    </li>
   <% end -%>
+  </ul>
 <% end -%>
