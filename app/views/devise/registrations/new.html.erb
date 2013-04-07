@@ -1,21 +1,39 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :name %><br />
-  <%= f.text_field :name, :autofocus => true %></div>
+  <%= f.input(
+    :name,
+    required: false,
+    wrapper: :prepend) do %>
+    <span class="add-on"><i class="icon-user"></i></span>
+    <%= f.input_field :name, autofocus: true %>
+  <% end -%>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+  <%= f.input(
+    :email,
+    required: false,
+    wrapper: :prepend) do %>
+    <span class="add-on"><i class="icon-envelope"></i></span>
+    <%= f.input_field :email %>
+  <% end -%>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+  <%= f.input(
+    :password,
+    required: false,
+    wrapper: :prepend) do %>
+    <span class="add-on"><i class="icon-asterisk"></i></span>
+    <%= f.input_field :password %>
+  <% end -%>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+  <%= f.input(
+    :password_confirmation,
+    required: false,
+    wrapper: :prepend) do %>
+    <span class="add-on"><i class="icon-asterisk"></i></span>
+    <%= f.input_field :password_confirmation %>
+  <% end -%>
 
-  <div><%= f.submit "Sign up" %></div>
+  <%= f.submit "Sign up", class: 'btn btn-large btn-success' %>
 <% end %>
-
-<%= render "devise/shared/links" %>
