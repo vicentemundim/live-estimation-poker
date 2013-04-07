@@ -4,15 +4,14 @@
 
 <%= hidden_field_tag :pusher_api_key, ENV['PUSHER_APP_KEY'] %>
 
-<div class="sidebar">
+<div class="connected-users">
   <h3>Connected Users:</h3>
 
   <div class="users-container">
   </div>
+</div>
 
-  <div class="actions-container">
-
-  </div>
+<div class="actions-container">
 </div>
 
 <div class="game-area" data-room-attributes="<%= resource.to_json %>" data-messages="">
@@ -50,11 +49,11 @@
 <script type="text/html" data-template-name="actions">
   <span>
   {{#started}}
-  <%= link_to "End Game", '', class: "btn btn-danger", data: { stop: true }  %>
+  <%= link_to "End Game", '', class: "btn btn-large btn-danger", data: { stop: true }  %>
   {{/started}}
 
   {{^started}}
-  <%= link_to "Start Game", '', class: "btn btn-success", data: { start: true }  %>
+  <%= link_to "Start Game", '', class: "btn btn-large btn-success", data: { start: true }  %>
   {{/started}}
   </span>
 </script>
