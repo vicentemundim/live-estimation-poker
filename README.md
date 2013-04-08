@@ -41,4 +41,4 @@ GITHUB_APP_SECRET=<SECRET>
 
 ## License
 
-[MIT-LICENSE](https://github.com/vicentemundim/live-estimation-poker/blob/master/License.txt)
+[MIT-LICENSE](https://github.com/vicentemundim/live-estimation-poker/blob/master/LICENSE.txt)
