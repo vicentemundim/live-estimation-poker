@@ -4,7 +4,7 @@ A planning poker application with real-time results.
 
 ## Running
 
-You'll will need a [Pusher](pusher.com) application setup in order to run the Live Estimation Poker application. Just create one, and configure the APP_ID, KEY and SECRET in a `.env` file:
+You'll will need a [Pusher](http://pusher.com) application setup in order to run the Live Estimation Poker application. Just create one, and configure the APP_ID, KEY and SECRET in a `.env` file:
 
 ```
 RACK_ENV=development
