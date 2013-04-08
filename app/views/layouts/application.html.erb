@@ -24,5 +24,6 @@
 
 <%= javascript_include_tag "http://js.pusher.com/1.12/pusher.min.js" %>
 <%= javascript_include_tag "application" %>
+<%= render 'analytics' if Rails.env.production? %>
 </body>
 </html>
