@@ -1,11 +1,20 @@
 class User
   include Mongoid::Document
+
+  def self.omniauth_providers
+    providers = []
+    providers << :facebook      if ENV['FACEBOOK_APP_ID'] && ENV['FACEBOOK_APP_SECRET']
+    providers << :google_oauth2 if ENV['GOOGLE_APP_ID'] && ENV['GOOGLE_APP_SECRET']
+    providers << :github        if ENV['GITHUB_APP_ID'] && ENV['GITHUB_APP_SECRET']
+    providers
+  end
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, omniauth_providers: [:facebook, :google_oauth2, :github]
+         :omniauthable, omniauth_providers: omniauth_providers
 
   field :name, type: String
 
