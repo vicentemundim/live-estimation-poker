@@ -9,9 +9,9 @@ You'll will need a [Pusher](http://pusher.com) application setup in order to run
 ```
 RACK_ENV=development
 
-PUSHER_APP_ID=38536
-PUSHER_APP_SECRET=c9571b53d36275da91a7
-PUSHER_APP_KEY=c782770d3d18b6d08412
+PUSHER_APP_ID=<ID>
+PUSHER_APP_SECRET=<SECRET>
+PUSHER_APP_KEY=<KEY>
 ```
 
 Now you can just run the application with `foreman start`.
