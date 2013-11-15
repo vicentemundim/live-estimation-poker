@@ -47,7 +47,8 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
 
   Results.Game = Backbone.Model.extend({
     initialize: function () {
-      _(this).bindAll()
+      _(this).bindAll('subscriptionSucceded', 'addPlayer', 'removePlayer', 'gameStarted', 'gameStopped', 'otherPlayerSelectedCard')
+
 
       this.players = new Results.Players
       this.cards   = new Results.Cards
@@ -58,7 +59,7 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
         this.cards.add(new Results.Card({ value: rawCard }))
       }, this)
 
-      this.listenTo(this.cards, 'selected', this.onCardSelected, this)
+      this.listenTo(this.cards, 'selected', this.onCardSelected)
 
       this.channelName = 'presence-' + this.get('room').get('token') + '-results'
 

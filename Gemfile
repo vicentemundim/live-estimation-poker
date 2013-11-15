@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '1.9.3'
 
-gem 'rails', '3.2.12'
+gem 'rails'
 
 # Mongoid for persistence
 gem 'mongoid'
@@ -45,16 +45,16 @@ gem 'dalli'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem "rails-backbone"
   gem 'compass-rails'
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass', '~> 2.3.0'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
   gem 'backbone-on-rails'
   gem 'marionette-rails'
 end
