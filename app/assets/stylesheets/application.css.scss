@@ -116,12 +116,15 @@ h1, h2 {
 .player-cards-container {
   li {
     position: relative;
-    padding: 10px;
     border: 1px solid #f7f7f7;
-    height: 80px;
+    height: 100px;
     margin: 10px;
     @include border-radius(4px);
     @include box-shadow(0 0 16px 0 rgba(0, 0, 0, 0.3));
+
+    > div {
+      padding: 10px;
+    }
 
     &.empty {
       border: 0;
@@ -175,6 +178,7 @@ h1, h2 {
     min-height: 60px;
 
     li {
+      position: relative;
       display: inline-block;
       margin: 0 5px;
 
@@ -188,6 +192,43 @@ h1, h2 {
 
       &.user.me img {
         @include box_shadow(0 0 16px 2px rgba(230, 237, 43, 0.7));
+      }
+
+      &.user {
+        img {
+          @include transition(opacity 0.2s ease-out);
+          opacity: 0.7;
+        }
+
+        &.selected {
+          img {
+            opacity: 1;
+          }
+
+          &:after {
+            visibility: visible;
+            opacity: 1;
+          }
+        }
+
+        &:after {
+          content: "\2714";
+
+          position: absolute;
+
+          bottom: 0;
+          right: 0;
+
+          color: #61965e;
+          font-size: 30px;
+
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+
+          visibility: hidden;
+          opacity: 0;
+
+          @include transition(opacity 0.2s ease-out, visibility 0.2s ease-out);
+        }
       }
     }
   }

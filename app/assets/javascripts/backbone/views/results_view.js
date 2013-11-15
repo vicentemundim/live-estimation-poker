@@ -19,6 +19,8 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
     onSelectedChange: function (model, value) {
       if (this.collection && value) {
         this.collection.selected(this)
+      } else {
+        this.collection.unselected(this)
       }
     }
   })
@@ -34,6 +36,10 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
       }, this)
 
       this.trigger('selected', selectedCard)
+    },
+
+    unselected: function (unselectedCard) {
+      this.trigger('unselected', unselectedCard)
     }
   })
 
@@ -42,7 +48,13 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
   })
 
   Results.PlayerCards = Backbone.Collection.extend({
-    model: Results.PlayerCard
+    model: Results.PlayerCard,
+
+    allSelected: function () {
+      return this.all(function (player) {
+        return player.get('selected')
+      })
+    }
   })
 
   Results.Game = Backbone.Model.extend({
@@ -59,7 +71,7 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
         this.cards.add(new Results.Card({ value: rawCard }))
       }, this)
 
-      this.listenTo(this.cards, 'selected', this.onCardSelected)
+      this.listenTo(this.cards, 'selected unselected', this.onCardSelectedChanged)
 
       this.channelName = 'presence-' + this.get('room').get('token') + '-results'
 
@@ -94,6 +106,10 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
 
     start: function (options) {
       options = options || {}
+
+      this.players.each(function (player) {
+        player.unset('selected')
+      })
 
       this.cards.each(function (card) {
         card.set({selected: false})
@@ -131,13 +147,13 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
       this.stop({ silence: true })
     },
 
-    onCardSelected: function (card) {
+    onCardSelectedChanged: function (card) {
       if (this.get('started')) {
-        this.me().set('card', card.get('value'))
+        this.me().set({ 'card': card.get('value'), selected: card.get('selected') })
         this.currentSelectedPlayerCards.add(this.me().toJSON(), {merge: true})
         this.resultsChannel.trigger('client-card-selected', this.me().toJSON())
 
-        if (this.currentSelectedPlayerCards.length == this.players.length) {
+        if (this.currentSelectedPlayerCards.length == this.players.length && this.currentSelectedPlayerCards.allSelected()) {
           this.gameStopped()
           this.resultsChannel.trigger('client-game-stopped', {})
         }
@@ -157,10 +173,18 @@ LiveEstimationPoker.module("Results", function(Results, LiveEstimationPoker, Bac
     tagName: 'li',
     className: 'user',
 
+    modelEvents: {
+      'change:selected': 'onChangeSelected'
+    },
+
     onRender: function () {
       if (this.model.get('isMe')) {
         this.$el.addClass('me')
       }
+    },
+
+    onChangeSelected: function () {
+      this.$el.toggleClass('selected', this.model.get('selected'))
     }
   })
 
