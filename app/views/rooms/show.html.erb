@@ -38,8 +38,10 @@
 </script>
 
 <script type="text/html" data-template-name="player-card">
-  <img src="{{avatar_url}}" width="60" height="60" title="{{name}}" data-toggle="tooltip" class="img-circle">
-  <a href="" class="card">{{card}}</a>
+  <div title="{{name}}" data-toggle="tooltip">
+    <img src="{{avatar_url}}" width="60" height="60" class="img-circle">
+    <a href="" class="card">{{card}}</a>
+  </div>
 </script>
 
 <script type="text/html" data-template-name="empty-results">
