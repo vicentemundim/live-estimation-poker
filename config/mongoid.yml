@@ -1,6 +1,5 @@
 session_default_options: &session_default_options
-  consistency: :strong
-  safe: true
+  read: primary
 
 development:
   # Configure available database sessions. (required)

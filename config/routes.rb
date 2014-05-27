@@ -7,7 +7,7 @@ LiveEstimationPoker::Application.routes.draw do
     get :join, on: :collection
   end
 
-  match '/pusher/auth' => 'pusher#auth'
+  post '/pusher/auth' => 'pusher#auth'
 
   root to: 'rooms#index'
 

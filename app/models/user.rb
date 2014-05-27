@@ -58,8 +58,6 @@ class User
 
   validates :name, presence: true
 
-  attr_accessible :provider, :uid, :name, :email, :password, :password_confirmation
-
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     User.or({ provider: auth.provider, uid: auth.uid }, { email: auth.info.email }).first_or_initialize.tap do |user|
       user.name = auth.info.name
