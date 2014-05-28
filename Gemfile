@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
+
 ruby '2.1.1'
 
 gem 'rails'
@@ -56,8 +58,9 @@ gem 'bootstrap-sass', '~> 2.3.0'
 # gem 'therubyracer', :platforms => :ruby
 
 gem 'uglifier'
-gem 'backbone-on-rails'
-gem 'marionette-rails'
+
+gem 'rails-assets-angular'
+gem 'rails-assets-angular-pusher'
 
 gem 'jquery-rails'
 

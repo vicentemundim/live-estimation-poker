@@ -12,10 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.mustache
-//= require underscore
-//= require backbone
-//= require backbone.marionette
 //= require bootstrap
-//= require backbone/live_estimation_poker
-
+//= require angular
+//= require angular-pusher
+//= require live_estimation_poker

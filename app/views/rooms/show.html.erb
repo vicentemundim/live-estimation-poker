@@ -4,58 +4,48 @@
 
 <%= hidden_field_tag :pusher_api_key, ENV['PUSHER_APP_KEY'] %>
 
-<div class="connected-users">
+<div class="connected-users" ng-controller="ConnectedUsersController">
   <h3>Connected Users:</h3>
 
   <div class="users-container">
+    <ul>
+      <li ng-repeat="(id, player) in game.players" class="user" ng-class="{ me: game.me.id == id, selected: player.selected }">
+        <img ng-src="{{player.avatar_url}}" width="60" height="60" title="{{player.name}}" data-toggle="tooltip" class="img-circle">
+      </li>
+    </ul>
   </div>
 </div>
 
-<div class="actions-container">
+<div class="actions-container" ng-controller="ActionsController">
+  <div class="actions">
+    <%= link_to "End Game", '', class: "btn btn-large btn-danger", 'ng-click' => 'game.end()', 'ng-show' => 'game.started' %>
+    <%= link_to "Start Game", '', class: "btn btn-large btn-success", 'ng-click' => 'game.start()', 'ng-show' => '!game.started' %>
+  </div>
 </div>
 
-<div class="game-area" data-room-attributes="<%= resource.to_json %>" data-messages="">
-  <div class="messages"></div>
-
+<div class="game-area" data-room-attributes="<%= resource.to_json %>" ng-controller="GameController">
   <h3>Select a card:</h3>
   <div class="cards-container">
+    <ul class="cards">
+      <li ng-repeat="card in game.cards" ng-class="{ selected: card.selected }">
+        <a href="" class="card" ng-click="game.toggle(card)">{{card.value}}</a>
+      </li>
+    </ul>
   </div>
 
   <div class="game-results">
     <h3>Results:</h3>
 
     <div class="player-cards-container">
+      <ul class="cards">
+        <li ng-repeat="player in game.players" ng-show="game.allPlayersSelected()">
+          <div title="{{player.name}}" data-toggle="tooltip">
+            <img ng-src="{{player.avatar_url}}" width="60" height="60" class="img-circle">
+            <a href="" class="card">{{player.card}}</a>
+          </div>
+        </li>
+        <li class="empty" ng-show="!game.allPlayersSelected()"><p>Waiting for players to select cards...</p></li>
+      </ul>
     </div>
   </div>
 </div>
-
-<script type="text/html" data-template-name="user">
-  <img src="{{avatar_url}}" width="60" height="60" title="{{name}}" data-toggle="tooltip" class="img-circle">
-</script>
-
-<script type="text/html" data-template-name="card">
-  <a href="" class="card">{{value}}</a>
-</script>
-
-<script type="text/html" data-template-name="player-card">
-  <div title="{{name}}" data-toggle="tooltip">
-    <img src="{{avatar_url}}" width="60" height="60" class="img-circle">
-    <a href="" class="card">{{card}}</a>
-  </div>
-</script>
-
-<script type="text/html" data-template-name="empty-results">
-  <p>Waiting for players to select cards...</p>
-</script>
-
-<script type="text/html" data-template-name="actions">
-  <span>
-  {{#started}}
-  <%= link_to "End Game", '', class: "btn btn-large btn-danger", data: { stop: true }  %>
-  {{/started}}
-
-  {{^started}}
-  <%= link_to "Start Game", '', class: "btn btn-large btn-success", data: { start: true }  %>
-  {{/started}}
-  </span>
-</script>
