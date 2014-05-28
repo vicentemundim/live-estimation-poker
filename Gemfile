@@ -5,6 +5,8 @@ ruby '2.1.1'
 
 gem 'rails'
 
+gem 'rack-cache'
+
 # Mongoid for persistence
 gem 'mongoid', '~> 4.0.0.beta'
 
