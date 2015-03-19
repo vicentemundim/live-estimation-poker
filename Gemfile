@@ -8,7 +8,13 @@ gem 'rails'
 gem 'rack-cache'
 
 # Mongoid for persistence
-gem 'mongoid', '~> 4.0.0.beta'
+gem 'mongoid', '~> 4.0.0'
+
+# Serializers
+gem 'active_model_serializers', '~> 0.8.0'
+
+# CORS support
+gem 'rack-cors', require: 'rack/cors'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -33,6 +39,7 @@ gem 'debugger'
 
 # Devise for authentication
 gem 'devise'
+gem 'simple_token_authentication', '~> 1.0'
 
 # Forms
 gem 'simple_form'

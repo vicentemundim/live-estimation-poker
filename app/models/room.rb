@@ -5,6 +5,8 @@ class Room
   field :token
   field :cards, type: Array, default: ['0', '1/2', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?']
 
+  default_scope -> { order_by(created_at: :desc) }
+
   before_create :generate_token
 
   def to_param
